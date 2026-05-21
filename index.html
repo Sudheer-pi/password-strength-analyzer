@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentinel | Premium Password Strength Analyzer & Educational Cryptography Hub</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="An interactive, high-end cryptographic tool that evaluates password entropy, detects breaches via secure k-anonymity API, generates secure keys, and demonstrates hashing security.">
+  <meta name="keywords" content="password strength, entropy calculator, have i been pwned, cryptographic hashing, secure generator, SHA-256, cybersecurity tool">
+  <meta name="author" content="Antigravity">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Sentinel | Premium Password Strength Analyzer">
+  <meta property="og:description" content="A state-of-the-art educational and interactive utility for assessing password complexity and learning cryptography concepts.">
+  <meta property="og:type" content="website">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- HEADER -->
+    <header class="app-header">
+      <span class="badge" id="app-badge">Cryptographic Utility</span>
+      <h1 class="app-title" id="app-main-title">SENTINEL</h1>
+      <p class="app-subtitle" id="app-main-subtitle">Assess complexity, estimate brute-force limits, generate high-entropy tokens, and learn the mechanics of secure client-side hashing.</p>
+    </header>
+
+    <!-- MAIN TWO-COLUMN LAYOUT -->
+    <main class="main-grid" id="main-analyzer-grid">
+      
+      <!-- LEFT COLUMN: REAL-TIME ANALYZER -->
+      <section class="glass-card" id="analyzer-card">
+        <div class="card-header-group">
+          <div class="card-icon" id="analyzer-icon">
+            <!-- Shield Keyhole Icon SVG -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="3"/><path d="M12 14v4"/></svg>
+          </div>
+          <h2 class="card-title">Live Password Analyzer</h2>
+        </div>
+
+        <div class="input-wrapper">
+          <input type="password" id="password-input" class="password-input" placeholder="Type a password to analyze..." autocomplete="off" spellcheck="false" aria-label="Password to analyze">
+          <button type="button" id="toggle-visibility-btn" class="toggle-visibility-btn" aria-label="Toggle password visibility">
+            <!-- Eye Icon SVG -->
+            <svg id="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+
+        <!-- Dynamic Strength Meter -->
+        <div class="meter-container">
+          <div class="meter-header">
+            <span class="strength-label-text">Analyzed Security Tier:</span>
+            <span id="strength-evaluation" class="strength-evaluation">No Password</span>
+          </div>
+          <div class="meter-track">
+            <div id="meter-bar" class="meter-bar"></div>
+          </div>
+        </div>
+
+        <!-- Real-Time Cryptographic Stat Readouts -->
+        <div class="analysis-panel" id="stats-panel">
+          <div class="info-stat">
+            <span class="info-stat-label">Entropy Score</span>
+            <span id="entropy-value" class="info-stat-value" style="color: var(--text-muted);">0.0 <span style="font-size:0.75rem; font-weight:400; color: var(--text-muted);">bits</span></span>
+          </div>
+          <div class="info-stat">
+            <span class="info-stat-label">Crack Time</span>
+            <span id="crack-time-value" class="info-stat-value" style="color: var(--text-muted);">Instant</span>
+          </div>
+          <p class="info-stat-desc" id="entropy-explanation">
+            Entropy measures the unpredictability of your password. Higher entropy increases resistance to dictionary and brute-force attacks.
+          </p>
+        </div>
+
+        <!-- Diagnostic Checklist -->
+        <div class="checklist-container" id="diagnostic-checklist">
+          <h3 class="checklist-title">Diagnostic Checklist</h3>
+          
+          <div class="check-item invalid" id="check-length">
+            <span class="check-icon">✕</span>
+            <span class="check-text">Minimum length of 12 characters (Recommended)</span>
+          </div>
+          <div class="check-item invalid" id="check-upper">
+            <span class="check-icon">✕</span>
+            <span class="check-text">Contains at least one uppercase letter (A-Z)</span>
+          </div>
+          <div class="check-item invalid" id="check-lower">
+            <span class="check-icon">✕</span>
+            <span class="check-text">Contains at least one lowercase letter (a-z)</span>
+          </div>
+          <div class="check-item invalid" id="check-number">
+            <span class="check-icon">✕</span>
+            <span class="check-text">Contains at least one numerical digit (0-9)</span>
+          </div>
+          <div class="check-item invalid" id="check-special">
+            <span class="check-icon">✕</span>
+            <span class="check-text">Contains at least one special symbol (!@#$%^&*)</span>
+          </div>
+          <div class="check-item valid" id="check-pattern">
+            <span class="check-icon">✓</span>
+            <span class="check-text">Free from sequential or highly repetitive patterns</span>
+          </div>
+          <div class="check-item valid" id="check-dictionary">
+            <span class="check-icon">✓</span>
+            <span class="check-text">Does not appear in common offline lists</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: DB SIMULATOR & PRIVACY BREACH CHECKER -->
+      <div class="side-column" id="side-column-panels">
+        
+        <!-- PRIVACY-FIRST BREACH CHECKER (k-ANONYMITY) -->
+        <section class="glass-card" id="breach-card">
+          <div class="card-header-group">
+            <div class="card-icon" id="breach-icon">
+              <!-- Shield Alert SVG -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <h2 class="card-title">k-Anonymity Leak Check</h2>
+          </div>
+          
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+            Checks if this password has been exposed in public data leaks. Uses a secure protocol where only the first 5 characters of your password's SHA-1 hash are uploaded. The plain text never leaves your device.
+          </p>
+
+          <div id="pwned-status" class="pwned-status idle">
+            <span class="pwned-status-icon">⚙</span>
+            <span id="pwned-status-text" class="pwned-status-text">Enter a password to run secure API lookup.</span>
+          </div>
+        </section>
+
+        <!-- SIMULATED SECURE DATABASE -->
+        <section class="glass-card" id="database-card">
+          <div class="card-header-group">
+            <div class="card-icon" id="database-icon">
+              <!-- Database Icon SVG -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+            </div>
+            <h2 class="card-title">Simulated Hash Database</h2>
+          </div>
+          
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+            Learn how servers verify passwords safely. Type a simulated username to save this password in your browser's database. It is securely hashed using SHA-256 before storage.
+          </p>
+
+          <!-- Warning Alerts -->
+          <div class="alert-container alert-warning" id="db-alert-warning">
+            <span>⚠️</span>
+            <div id="db-alert-warning-text">Password Reuse Warning: This password hash matches an existing account!</div>
+          </div>
+          <div class="alert-container alert-danger" id="db-alert-danger">
+            <span>❌</span>
+            <div id="db-alert-danger-text">Invalid Username or Empty Password.</div>
+          </div>
+
+          <!-- Add to DB interactive actions -->
+          <div class="db-actions">
+            <input type="text" id="username-input" class="username-input" placeholder="Desired Username" aria-label="Username for database save">
+            <button type="button" id="save-to-db-btn" class="btn btn-primary" disabled>
+              <span>Hash & Save</span>
+            </button>
+          </div>
+
+          <!-- DB Hashed Output List -->
+          <div class="table-wrapper" id="database-table-wrapper">
+            <table class="db-table" id="db-records-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Cryptographic Hash (SHA-256)</th>
+                </tr>
+              </thead>
+              <tbody id="db-table-body">
+                <!-- Records injected dynamically via JS -->
+                <tr>
+                  <td colspan="2" class="empty-state">No simulated accounts saved yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button type="button" id="clear-db-btn" class="clear-db-btn">
+              <span>🗑 Clear Hashed Records</span>
+            </button>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- SECURE PASSWORD GENERATOR SECTION -->
+    <section class="glass-card" id="generator-card">
+      <div class="card-header-group">
+        <div class="card-icon" id="generator-icon">
+          <!-- Sparkles SVG -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707M12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>
+        </div>
+        <h2 class="card-title">High-Entropy Password Generator</h2>
+      </div>
+
+      <div class="generator-section">
+        
+        <!-- Result Bar -->
+        <div class="generator-result">
+          <div id="generated-password-display" class="generated-text placeholder">Click 'Generate Security Key' below...</div>
+          <button type="button" id="copy-password-btn" class="btn btn-secondary" style="padding: 0.6rem 1rem;" aria-label="Copy generated password">
+            <!-- Clipboard SVG -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+            <span id="copy-btn-text">Copy</span>
+          </button>
+        </div>
+
+        <!-- Controls grid -->
+        <div class="generator-options">
+          
+          <!-- Length Slider -->
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>Token Character Length:</span>
+              <span id="length-val" class="length-val">16</span>
+            </div>
+            <input type="range" id="length-slider" class="slider-input" min="8" max="64" value="16" aria-label="Password generation length">
+          </div>
+
+          <!-- Pool Select Toggles -->
+          <div class="toggle-group">
+            <div class="toggle-item">
+              <span>Include Uppercase letters (A-Z)</span>
+              <label class="switch">
+                <input type="checkbox" id="gen-uppercase" checked>
+                <span class="slider-switch"></span>
+              </label>
+            </div>
+            <div class="toggle-item">
+              <span>Include Lowercase letters (a-z)</span>
+              <label class="switch">
+                <input type="checkbox" id="gen-lowercase" checked>
+                <span class="slider-switch"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-item">
+              <span>Include Numerical Digits (0-9)</span>
+              <label class="switch">
+                <input type="checkbox" id="gen-numbers" checked>
+                <span class="slider-switch"></span>
+              </label>
+            </div>
+            <div class="toggle-item">
+              <span>Include Special Symbols (!@#$%^&*)</span>
+              <label class="switch">
+                <input type="checkbox" id="gen-symbols" checked>
+                <span class="slider-switch"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="generator-actions">
+            <button type="button" id="generate-btn" class="btn btn-primary">
+              ⚡ Generate Security Key
+            </button>
+            <button type="button" id="generate-passphrase-btn" class="btn btn-secondary">
+              📖 Generate Easy-to-Remember Passphrase
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATIONAL HUB SECTION -->
+    <section class="edu-container" id="educational-hub">
+      
+      <article class="edu-card">
+        <h3>
+          <!-- Information SVG -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          Shannon Entropy & Brute Force Estimations
+        </h3>
+        <p>
+          Password entropy measures strength in <strong>bits</strong>. It answers: <em>"How many binary questions does an attacker need to ask to guess the password?"</em>
+        </p>
+        <div class="math-formula">Entropy (E) = Length (L) &times; log₂ (Character Pool Size R)</div>
+        <p>
+          Each added character multiplies the potential password space exponentially. If an attacker runs a GPU cluster trying <strong>100 billion keys per second (10¹¹ H/s)</strong>:
+        </p>
+        <ul>
+          <li><strong>Under 50 bits (Weak):</strong> Guessed in minutes or hours.</li>
+          <li><strong>60 - 80 bits (Moderate):</strong> Secure for everyday personal user logins.</li>
+          <li><strong>Over 100 bits (Cryptographically Strong):</strong> Takes millions of years to crack, offering ultimate safety against server database dumps and parallel brute-force attacks.</li>
+        </ul>
+      </article>
+
+      <article class="edu-card">
+        <h3>
+          <!-- Hash Lock SVG -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Why Do We Hash Passwords?
+        </h3>
+        <p>
+          Secure websites **never** store plain text passwords. Instead, they use a one-way mathematical function called a <strong>Cryptographic Hash</strong> (e.g. SHA-256 or bcrypt) to turn your password into a unique fixed-length string of hex characters.
+        </p>
+        <ul>
+          <li><strong>Preimage Resistance:</strong> It is mathematically impossible to reverse a high-quality cryptographic hash to obtain the plain text password.</li>
+          <li><strong>Deterministic:</strong> The same password always results in the exact same hash. So, when you log in, the server hashes your input and matches it with the stored hash.</li>
+          <li><strong>Salt Protection:</strong> Modern servers add random strings ("salts") to passwords before hashing to make offline precomputed tables ("rainbow tables") useless.</li>
+        </ul>
+      </article>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <p>&copy; 2026 Sentinel. Engineered for educational and visual excellence.</p>
+      <p style="font-size: 0.7rem; color: var(--text-muted);">This application runs purely client-side. No passwords or personal identifiers are uploaded or stored remotely, complying fully with zero-trust cryptographic standards.</p>
+    </footer>
+
+  </div>
+
+  <!-- JavaScript Application Entry Module -->
+  <script type="module" src="app.js"></script>
+
+</body>
+</html>
